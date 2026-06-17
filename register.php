@@ -11,7 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm_password'] ?? '';
+    $code = trim($_POST['registration_code'] ?? '');
     if (!$username || !$email || !$password) $error = 'Tous les champs sont obligatoires.';
+    elseif ($code !== '1234-ABCD-12AB') $error = 'Numéro de série invalide ou manquant.';
     elseif ($password !== $confirm) $error = 'Les mots de passe ne correspondent pas.';
     elseif (strlen($password) < 6)  $error = 'Mot de passe trop court (6 caractères minimum).';
     else {
@@ -44,6 +46,7 @@ $theme = $_COOKIE['theme'] ?? 'light';
       <div class="form-group"><label>Adresse email</label><input type="email" name="email" required placeholder="exemple@isep.fr"></div>
       <div class="form-group"><label>Mot de passe</label><input type="password" name="password" required placeholder="6 caractères minimum" minlength="6"></div>
       <div class="form-group"><label>Confirmer</label><input type="password" name="confirm_password" required placeholder="••••••••"></div>
+      <div class="form-group"><label>Numéro de série</label><input type="text" name="registration_code" required placeholder="XXXX-XXXX-XXXX"></div>
       <button type="submit" class="btn btn-primary btn-full">Créer le compte</button>
     </form>
     <p class="auth-switch">Déjà un compte ? <a href="/index.php">Se connecter</a></p>
